@@ -8,7 +8,7 @@
 
 <br/>
 
-[![Product](https://img.shields.io/badge/HiveMind-v1.0-F9C900?style=for-the-badge&labelColor=000000)](https://github.com/HiveMind-App/HiveMind)
+[![Product](https://img.shields.io/badge/HiveMind-v1.0.0-F9C900?style=for-the-badge&labelColor=000000)](https://github.com/HiveMind-App/HiveMind/releases/latest)
 [![Stack](https://img.shields.io/badge/Stack-TS%20%C2%B7%20Kotlin%20%C2%B7%20Supabase-F9C900?style=for-the-badge&labelColor=000000)](#arquitectura)
 [![Web](https://img.shields.io/badge/Web-hivemind.aaangelmartin.com-F9C900?style=for-the-badge&labelColor=000000)](https://hivemind.aaangelmartin.com)
 [![Watchtower](https://img.shields.io/badge/Watchtower-Live-F9C900?style=for-the-badge&labelColor=000000)](https://hivemind.aaangelmartin.com/watchtower)
@@ -20,6 +20,7 @@
 [**Web**](https://hivemind.aaangelmartin.com) ·
 [**Ver Watchtower**](https://hivemind.aaangelmartin.com/watchtower) ·
 [**Documentación**](https://hivemind.aaangelmartin.com/docs) ·
+[**Descargar**](https://github.com/HiveMind-App/HiveMind/releases/latest) ·
 [**Contacto**](#contacto)
 
 <br/>
@@ -86,15 +87,55 @@ HiveMind tiene cuatro piezas que puedes instalar por separado. Todas funcionan e
 | Plugin IntelliJ | IntelliJ IDEA 2023.2 o superior |
 | Extensión VS Code | Visual Studio Code 1.85 o superior |
 
-### Descargar
+### Descargar v1.0.0
 
 Ve a [**Releases**](https://github.com/HiveMind-App/HiveMind/releases/latest) y descarga el archivo que necesites:
 
 | Archivo | Qué es | Cómo instalar |
 |---|---|---|
 | `hivemind-plugin-1.0.0.zip` | Plugin IntelliJ | `Settings` → `Plugins` → `⚙` → `Install Plugin from Disk...` |
-| `hivemind-cli-1.0.0.tgz` | CLI (Node.js) | `npm install -g hivemind-cli-1.0.0.tgz` |
-| `hivemind-vscode-1.0.0.vsix` | Extensión VS Code | `code --install-extension hivemind-vscode-1.0.0.vsix` |
+| `hivemind-cli-0.1.0.tgz` | CLI (Node.js) | `npm install -g hivemind-cli-0.1.0.tgz` |
+| `hivemind-vscode-0.1.0.vsix` | Extensión VS Code | `code --install-extension hivemind-vscode-0.1.0.vsix` |
+
+Después de instalar, inicia sesión con tu cuenta de [hivemind.aaangelmartin.com](https://hivemind.aaangelmartin.com).
+
+---
+
+## Uso rápido
+
+### Primera vez
+
+1. Ve a [hivemind.aaangelmartin.com](https://hivemind.aaangelmartin.com) y crea una cuenta.
+2. Instala al menos el CLI o uno de los dos plugins.
+3. Abre el Watchtower en [hivemind.aaangelmartin.com/watchtower](https://hivemind.aaangelmartin.com/watchtower) y verás a tu equipo ya conectado.
+
+### Flujo diario
+
+```bash
+# Lanza tu asistente de IA envuelto por HiveMind
+$ hivemind run
+
+# Trabaja con Gemini como siempre
+> refactoriza TrelloService para usar async/await
+# ... gemini responde ...
+
+# Cierra la sesión (Ctrl-C) cuando acabes
+```
+
+Mientras tanto, tu equipo puede ver en el Watchtower:
+
+- En qué archivo estás trabajando ahora mismo.
+- Qué tipo de intención estás ejecutando (feature, refactor, bugfix).
+- Si otro miembro del equipo está tocando algo semánticamente similar.
+- Un log completo de cada prompt y respuesta.
+
+### Detectar colisiones
+
+HiveMind captura intenciones de código de múltiples formas: cada prompt que envías a tu CLI de IA, las tarjetas de Trello asignadas, y los comandos manuales desde el IDE (`Ctrl+Shift+H`). Con cada intención:
+
+1. Genera un embedding de 768 dimensiones.
+2. Busca intents semánticamente similares con cosine similarity `> 0.85`.
+3. Si encuentra una colisión, te avisa **antes del merge** con un InlayHint en IntelliJ o una decoration en VS Code.
 
 ---
 
@@ -125,9 +166,9 @@ HiveMind es un sistema distribuido con cuatro capas:
     +-----------------+ +-----------------+ +----------------+
 ```
 
-- **Captura**: CLI (envolviendo cualquier AI CLI en una PTY real), plugin IntelliJ (`DocumentListener`) y extensión VS Code (`onDidChangeTextDocument`).
+- **Captura**: CLI (envolviendo cualquier AI CLI en una PTY real), plugin IntelliJ y extensión VS Code.
 - **Backend**: Supabase con PostgreSQL, pgvector, Realtime, GoTrue Auth y Edge Functions en Deno.
-- **Inteligencia**: embeddings con `text-embedding-004` de OpenAI, búsqueda vectorial HNSW, cosine similarity > 0.85 para disparar la alerta.
+- **Inteligencia**: embeddings con `text-embedding-004` de OpenAI, búsqueda vectorial HNSW, cosine similarity > 0.85.
 - **Presentación**: Watchtower PWA con React 19, Vite 8 y Tailwind CSS 4.
 
 ---
@@ -138,19 +179,19 @@ HiveMind es un sistema distribuido con cuatro capas:
 Porque tu equipo ya no es una suma de personas trabajando con IAs individuales: es un enjambre en el que todas las IAs se ven entre ellas, comparten contexto y se coordinan. Una colmena.
 
 **¿Tengo que cambiar mi CLI de IA actual?**
-No. HiveMind envuelve el CLI que ya usas (Gemini, Claude Code, lo que sea) con una PTY real y captura cada turn de forma transparente. Tu CLI no sabe que HiveMind existe.
+No. HiveMind envuelve el CLI que ya usas (Gemini, Claude Code, lo que sea) de forma transparente. Tu CLI no sabe que HiveMind existe.
 
 **¿Dónde se guardan mis prompts?**
 En nuestra infraestructura con Row Level Security activado por `project_id`. Solo tú y tu equipo podéis ver vuestros datos.
 
 **¿Funciona con equipos que no usan IntelliJ?**
-Sí. Hay una extensión para VS Code con paridad funcional. Y si no usas ni uno ni otro, el CLI y el Watchtower funcionan en cualquier editor.
+Sí. Hay una extensión para VS Code con paridad funcional. Y si no usas ninguno, el CLI y el Watchtower funcionan en cualquier editor.
 
 **¿Qué modelos de IA soporta?**
 Cualquier CLI que puedas lanzar en una terminal. Probado con Gemini CLI oficial, Claude Code y GPT-4 via CLI wrappers.
 
 **¿Mi código sale del workspace?**
-No. Solo se envía el **texto del intent** (el prompt o la descripción de la tarea) para generar embeddings. Tu código fuente nunca se sube.
+No. Solo se envía el **texto del intent** para generar embeddings. Tu código fuente nunca se sube.
 
 ---
 
@@ -180,6 +221,6 @@ HiveMind no es solo un producto: es la metodología que salió de cómo nos orga
 
 **© 2026 HiveMind. Todos los derechos reservados.**
 
-[Web](https://hivemind.aaangelmartin.com) · [Watchtower](https://hivemind.aaangelmartin.com/watchtower) · [Docs](https://hivemind.aaangelmartin.com/docs)
+[Web](https://hivemind.aaangelmartin.com) · [Watchtower](https://hivemind.aaangelmartin.com/watchtower) · [Docs](https://hivemind.aaangelmartin.com/docs) · [Releases](https://github.com/HiveMind-App/HiveMind/releases/latest)
 
 </div>
