@@ -1,0 +1,108 @@
+{
+  "name": "hivemind-vscode",
+  "displayName": "HiveMind",
+  "description": "Una colmena de IAs, para un equipo de desarrolladores.",
+  "version": "0.1.0",
+  "publisher": "hivemind",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": ["Other", "AI", "Visualization"],
+  "main": "./dist/extension.js",
+  "activationEvents": ["onStartupFinished"],
+  "contributes": {
+    "commands": [
+      {
+        "command": "hivemind.login",
+        "title": "HiveMind: Iniciar sesión",
+        "icon": "$(sign-in)"
+      },
+      {
+        "command": "hivemind.logout",
+        "title": "HiveMind: Cerrar sesión"
+      },
+      {
+        "command": "hivemind.openWatchtower",
+        "title": "HiveMind: Abrir Watchtower",
+        "icon": "$(eye)"
+      },
+      {
+        "command": "hivemind.askAI",
+        "title": "HiveMind: Preguntar a la IA"
+      },
+      {
+        "command": "hivemind.refreshTeam",
+        "title": "HiveMind: Refrescar equipo"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "hivemind.askAI",
+        "key": "ctrl+shift+h",
+        "mac": "cmd+shift+h",
+        "when": "editorTextFocus"
+      }
+    ],
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "hivemind",
+          "title": "HiveMind",
+          "icon": "media/icon.svg"
+        }
+      ]
+    },
+    "views": {
+      "hivemind": [
+        {
+          "type": "webview",
+          "id": "hivemind.watchtower",
+          "name": "Watchtower",
+          "icon": "media/icon.svg"
+        }
+      ]
+    },
+    "menus": {
+      "editor/context": [
+        {
+          "command": "hivemind.askAI",
+          "group": "hivemind"
+        }
+      ],
+      "view/title": [
+        {
+          "command": "hivemind.openWatchtower",
+          "when": "view == hivemind.watchtower",
+          "group": "navigation"
+        },
+        {
+          "command": "hivemind.logout",
+          "when": "view == hivemind.watchtower",
+          "group": "1_action"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "HiveMind",
+      "properties": {
+        "hivemind.watchtowerUrl": {
+          "type": "string",
+          "default": "https://hivemind.aaangelmartin.com",
+          "description": "Base URL del Watchtower (solo cambiar para desarrollo local)."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run build",
+    "build": "esbuild src/extension.ts --bundle --outfile=dist/extension.js --external:vscode --format=cjs --platform=node --target=node18 \"--define:__SUPABASE_URL__=\\\"${HIVEMIND_SUPABASE_URL:-}\\\"\" \"--define:__SUPABASE_ANON_KEY__=\\\"${HIVEMIND_SUPABASE_ANON_KEY:-}\\\"\" \"--define:__WATCHTOWER_URL__=\\\"${HIVEMIND_WATCHTOWER_URL:-https://hivemind.aaangelmartin.com}\\\"\"",
+    "watch": "esbuild src/extension.ts --bundle --outfile=dist/extension.js --external:vscode --format=cjs --platform=node --target=node18 --watch",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "@types/vscode": "^1.85.0",
+    "esbuild": "^0.20.0",
+    "typescript": "^5.3.0"
+  }
+}

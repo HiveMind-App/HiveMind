@@ -1,0 +1,53 @@
+<idea-plugin>
+    <id>com.hivemind.plugin</id>
+    <name>HiveMind</name>
+    <vendor email="hivemind@hackathon.dev">HiveMind Team</vendor>
+    <version>1.0-HACKATHON</version>
+
+    <description><![CDATA[
+        <b>HiveMind</b> — Una colmena de IAs, para un equipo de desarrolladores.<br/>
+        <br/>
+        Sincroniza las intenciones de codigo de cada IA del equipo en tiempo real,
+        previene conflictos antes de que lleguen a Git y convierte el IDE en el
+        centro de mando del enjambre: Trello, Slack, OpenAI/Gemini y el Watchtower,
+        todo sin salir del editor.
+    ]]></description>
+
+    <idea-version since-build="232"/>
+
+    <depends>com.intellij.modules.platform</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <!-- Panel lateral HiveMind -->
+        <toolWindow
+            id="HiveMind"
+            anchor="right"
+            factoryClass="com.hivemind.toolwindow.HiveMindWindowFactory"
+            secondary="false"
+            canCloseContents="false"/>
+
+        <!-- Inicialización al abrir proyecto -->
+        <postStartupActivity
+            implementation="com.hivemind.HiveMindStartupActivity"/>
+
+        <!-- Listener para todos los editores (PSI) -->
+        <editorFactoryListener
+            implementation="com.hivemind.listeners.HiveMindEditorListener"/>
+
+        <!-- Configuración persistente (auto-rellenada tras login) -->
+        <applicationService
+            serviceImplementation="com.hivemind.config.HiveMindSettings"/>
+
+        <!-- InlayHints para alertas de colisión -->
+        <codeInsight.inlayProvider
+            language="kotlin"
+            implementationClass="com.hivemind.collision.ConflictInlayProvider"/>
+
+        <!-- Grupo de notificaciones -->
+        <notificationGroup
+            id="HiveMind Notifications"
+            displayType="BALLOON"
+            isLogByDefault="true"/>
+    </extensions>
+
+</idea-plugin>

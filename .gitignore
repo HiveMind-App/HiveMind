@@ -1,0 +1,26 @@
+# Credenciales locales — NUNCA subir al repo
+.env
+.env.local
+.env.*.local
+
+# Build artifacts
+dist/
+*.tsbuildinfo
+*.log
+
+# Dependencias Node
+node_modules/
+hivemind-vscode/node_modules/
+hivemind-vscode/dist/
+
+# IntelliJ plugin
+hivemind-plugin/.gradle/
+hivemind-plugin/build/
+hivemind-plugin/.idea/
+hivemind-plugin/*.iml
+
+# IDE
+.idea/
+.vscode/settings.json
+.DS_Store
+Thumbs.db
