@@ -1,0 +1,14 @@
+build/
+.idea/
+*.iml
+*.ipr
+*.iws
+.gradle/
+out/
+gen/
+
+# Credenciales — NUNCA subir al repo
+supabase-config.properties
+hivemind-config.properties
+.env
+.env.local

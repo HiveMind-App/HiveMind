@@ -1,0 +1,10 @@
+# HiveMind – Supabase Configuration
+# ──────────────────────────────────────────────────────────────
+# INSTRUCCIONES:
+#   1. Copia este archivo: cp supabase-config.properties.template supabase-config.properties
+#   2. Rellena con las credenciales que comparte Alejandro
+#   3. NUNCA subas supabase-config.properties al repo (.gitignore lo excluye)
+# ──────────────────────────────────────────────────────────────
+
+SUPABASE_URL=https://TU_PROYECTO.supabase.co
+SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
