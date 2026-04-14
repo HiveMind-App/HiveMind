@@ -4,7 +4,7 @@
 
 HiveMind is an open-source tool that wraps your AI CLI (Gemini, Claude Code, etc.) and synchronizes your team's intentions in real time — so every developer knows what every AI agent is doing, preventing duplicate work and surfacing conflicts before they happen.
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![License: AGPL v3](https://img.shields.io/badge/License-AGPL%20v3-blue.svg)](LICENSE)
 [![Node.js](https://img.shields.io/badge/Node.js-20%2B-green)](https://nodejs.org)
 
 ---
@@ -158,4 +158,4 @@ Pull requests are welcome! Please read [CONTRIBUTING.md](../CONTRIBUTING.md) fir
 
 ## License
 
-[MIT](LICENSE) — free to use, modify, and distribute.
+[GNU Affero General Public License v3.0](LICENSE) — software libre: puedes usar, modificar y distribuir, pero las versiones modificadas (incluso las que se ejecutan como servicio en red) deben publicarse bajo la misma licencia.
