@@ -23,7 +23,7 @@
     "mcp"
   ],
   "author": "HiveMind Team",
-  "license": "MIT",
+  "license": "AGPL-3.0-only",
   "engines": {
     "node": ">=20"
   },
